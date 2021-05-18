@@ -1,0 +1,5 @@
+Ignores the node modules folder
+node_modules
+
+Ignores package-lock.json file
+package-lock.json
