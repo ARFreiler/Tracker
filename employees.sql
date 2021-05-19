@@ -22,3 +22,5 @@ CREATE TABLE employee (
     manager_id INT(10),
     PRIMARY KEY (id)
 )
+
+SELECT * FROM employees_DB;
