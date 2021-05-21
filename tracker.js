@@ -12,11 +12,14 @@ const connection = mysql.createConnection({
     database: 'employees_DB',
 });
 
+// Connection ID
 connection.connect((err) => {
     if (err) throw err;
     runApp();
 });
 
+
+// Initial App Prompt
 const runApp = () => {
     inquirer
         .prompt({
@@ -70,3 +73,11 @@ const runApp = () => {
         });
 };
 
+function allEmployees() {
+    connection.query("SELECT employee.first_name, employee.last_name, position.title, position.salary, department.dept_name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN position on position.id = employee.position_id INNER JOIN department on department.id = position.department_id left join employee e on employee.manager_id = e.id;",
+        function (err, res) {
+            if (err) throw err
+            console.table(res)
+            runApp()
+        });
+};
