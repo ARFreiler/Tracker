@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const { combineLatest } = require('rxjs');
 require('dotenv').config()
 
 const connection = mysql.createConnection({
@@ -119,4 +120,47 @@ function byManager() {
             console.table(res);
             runApp();
         });
-};   
+};
+
+// Add Employee
+function addEmployee() {
+    inquirer
+        .prompt([
+            {
+                message: 'Enter first name of new employee:',
+                type: 'input',
+                name: 'employeeFirstName'
+            },
+            {
+                message: 'Enter last name of new employee:',
+                type: 'input',
+                name: 'employeeLastName',
+            },
+            {
+                message: 'Enter Role ID of new employee:',
+                type: 'input',
+                name: 'employeeRole',
+            },
+            {
+                message: 'Enter Manager ID of new employee:',
+                type: 'input',
+                name: 'employeeManagerId',
+            },
+        ])
+        .then(answer => {
+            connection.query(
+                'INSERT INTO employee SET ?',
+                {
+                    first_name: answer.employeeFirstName,
+                    last_name: answer.employeeLastName,
+                    role_id: answer.employeeRole,
+                    manager_id: answer.employeeManagerId,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(`You have entered ${answer.employeeFirstName} ${answer.employeeLastName} in the employee database.`);
+                    runApp();
+                }
+            );
+        });
+}
