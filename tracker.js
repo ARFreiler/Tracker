@@ -74,6 +74,8 @@ const runApp = () => {
         });
 };
 
+
+// View All Employees
 function allEmployees() {
     connection.query(
         `SELECT
@@ -94,5 +96,16 @@ function allEmployees() {
             if (err) throw err
             console.table(res)
             runApp()
+        });
+};
+
+// View By Department
+function byDept() {
+    connection.query(
+        'SELECT id, dept_name FROM department',
+        (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            runApp();
         });
 };
