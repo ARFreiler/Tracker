@@ -1,15 +1,16 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+require('dotenv').config()
 
 const connection = mysql.createConnection({
     host: 'localhost',
 
     port: 3306,
 
-    user: 'root',
+    user: process.env.DB_USER,
 
-    password: 'Dizzle80!',
-    database: 'employees_DB',
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
 // Connection ID
@@ -74,7 +75,7 @@ const runApp = () => {
 };
 
 function allEmployees() {
-    connection.query("SELECT employee.first_name, employee.last_name, position.title, position.salary, department.dept_name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN position on position.id = employee.position_id INNER JOIN department on department.id = position.department_id left join employee e on employee.manager_id = e.id;",
+    connection.query("",
         function (err, res) {
             if (err) throw err
             console.table(res)

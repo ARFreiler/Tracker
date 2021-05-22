@@ -1,0 +1,25 @@
+{
+  "name": "tracker",
+  "version": "1.0.0",
+  "description": "[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)",
+  "main": "tracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ARFreiler/Tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ARFreiler/Tracker/issues"
+  },
+  "homepage": "https://github.com/ARFreiler/Tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "dotenv": "^10.0.0",
+    "inquirer": "^8.1.0",
+    "mysql": "^2.18.1"
+  }
+}
