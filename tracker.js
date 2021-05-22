@@ -109,3 +109,14 @@ function byDept() {
             runApp();
         });
 };
+
+// View By Department
+function byManager() {
+    connection.query(
+        'SELECT id, manager_id FROM employee',
+        (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            runApp();
+        });
+};   
