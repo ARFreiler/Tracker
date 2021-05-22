@@ -75,7 +75,21 @@ const runApp = () => {
 };
 
 function allEmployees() {
-    connection.query("",
+    connection.query(
+        `SELECT
+        employee.id,
+        employee.first_name AS 'First Name',
+        employee.last_name AS 'Last Name',
+        role.title AS 'Title',
+        department.dept_name AS Department,
+        role.salary AS 'Salary',
+        CONCAT(e.first_name , ' ' , e.last_name) AS 'Manager'
+    FROM employee 
+    INNER JOIN role ON employee.role_id = role.id 
+    LEFT JOIN department ON role.department_id = department.id
+    LEFT JOIN employee e ON employee.manager_id = e.id
+    ORDER BY employee.id;
+        `,
         function (err, res) {
             if (err) throw err
             console.table(res)
