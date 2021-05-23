@@ -187,3 +187,41 @@ function addEmployee() {
             );
         });
 }
+
+function addRole() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'addRole',
+                message: 'Which role would you like to add?',
+            },
+            {
+                type: 'input',
+                name: 'roleSalary',
+                message: 'What is the salary for this role?',
+            },
+            {
+                type: 'input',
+                name: 'deptID',
+                message: 'What is the department ID for this role?',
+            },
+        ])
+        .then(answer => {
+            connection.query(
+                'INSERT INTO role SET ?',
+                {
+                    title: answer.addRole,
+                    salary: answer.roleSalary,
+                    department_id: answer.deptID,
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(
+                        `You have entered ${answer.addRole} into your role database.`
+                    );
+                    runApp();
+                }
+            );
+        });
+}
