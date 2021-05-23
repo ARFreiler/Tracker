@@ -11,7 +11,7 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
--- Position Table --
+-- Role Table --
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NULL,

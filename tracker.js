@@ -31,8 +31,10 @@ const runApp = () => {
             choices: [
                 'View All Employees.',
                 'View Employees by Department.',
+                'View Employees by Role.',
                 'View Employees by Manager.',
                 'Add Employee.',
+                'Add Role.',
                 'Remove Employee',
                 'Update Employee Role',
                 'Update Employee Manager.'
@@ -48,12 +50,20 @@ const runApp = () => {
                     byDept();
                     break;
 
+                case 'View Employees by Role.':
+                    byRole();
+                    break;
+
                 case 'View Employees by Manager.':
                     byManager();
                     break;
 
                 case 'Add Employee.':
                     addEmployee();
+                    break;
+
+                case 'Add Role.':
+                    addRole();
                     break;
 
                 case 'Remove Employee':
@@ -103,6 +113,17 @@ function allEmployees() {
 // View By Department
 function byDept() {
     connection.query(
+        'SELECT id, title FROM role',
+        (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            runApp();
+        });
+};
+
+// View by Role
+function byRole() {
+    connection.query(
         'SELECT id, dept_name FROM department',
         (err, res) => {
             if (err) throw err;
@@ -111,7 +132,9 @@ function byDept() {
         });
 };
 
-// View By Department
+
+
+// View By Manager
 function byManager() {
     connection.query(
         'SELECT id, manager_id FROM employee',
