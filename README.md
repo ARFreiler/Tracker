@@ -16,15 +16,21 @@
 
 ## Description
 
+A command line application that allows the user to oversee employee data pertaining to role within the company, current department, and manager that they report to improve organization within a company.
+
 ## Installation
+
+Run _node tracker.js_ from the command line
 
 ## Credits
 
 [MDN Documents](https://developer.mozilla.org/en-US/docs/Learn)
 
-[W3Schools](https://www.w3schools.com)
-
 ## Links
+
+[Repository](https://github.com/ARFreiler/Tracker)
+
+[Screencastify](https://drive.google.com/file/d/1-2HWB3VCHKTqJeYdMLxmZbRhXVLEsgZy/view)
 
 ## License
 
