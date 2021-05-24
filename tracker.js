@@ -35,9 +35,9 @@ const runApp = () => {
                 'View Employees by Manager.',
                 'Add Employee.',
                 'Add Role.',
-                'Remove Employee',
+                'Add Department.',
                 'Update Employee Role',
-                'Update Employee Manager.'
+
             ],
         })
         .then((answer) => {
@@ -66,16 +66,12 @@ const runApp = () => {
                     addRole();
                     break;
 
-                case 'Remove Employee':
-                    removeEmployee();
+                case 'Add Department.':
+                    addDept();
                     break;
 
                 case 'Update Employee Role':
                     updateEmployee();
-                    break;
-
-                case 'Update Employee Manager.':
-                    updateManager();
                     break;
 
                 default:
@@ -225,3 +221,87 @@ function addRole() {
             );
         });
 }
+
+function addDept() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'deptName',
+                message: 'What department would you like to add?',
+            },
+        ])
+        .then(answer => {
+            connection.query(
+                'INSERT INTO department (dept_name) VALUES (?)',
+                answer.deptName,
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(
+                        `You have entered ${answer.deptName} into your department database.`
+                    );
+                    runApp();
+                }
+            );
+        });
+}
+
+function updateEmployee() {
+    const employeeArray = [];
+    const roleArray = [];
+    connection.query(
+        `SELECT CONCAT (employee.first_name, ' ', employee.last_name) as employee FROM employees_DB.employee`,
+        (err, res) => {
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                employeeArray.push(res[i].employee);
+            }
+            connection.query(
+                `SELECT title FROM employees_DB.role`,
+                (err, res) => {
+                    if (err) throw err;
+                    for (let i = 0; i < res.length; i++) {
+                        roleArray.push(res[i].title);
+                    }
+
+                    inquirer
+                        .prompt([
+                            {
+                                name: 'name',
+                                type: 'list',
+                                message: `Whose role would you like to change?`,
+                                choices: employeeArray,
+                            },
+                            {
+                                name: 'role',
+                                type: 'list',
+                                message: 'What would you like to change their role to?',
+                                choices: roleArray,
+                            },
+                        ])
+                        .then(answers => {
+                            let currentRole;
+                            const name = answers.name.split(' ');
+                            connection.query(
+                                `SELECT id FROM employees_DB.role WHERE title = '${answers.role}'`,
+                                (err, res) => {
+                                    if (err) throw err;
+                                    for (let i = 0; i < res.length; i++) {
+                                        currentRole = res[i].id;
+                                    }
+                                    connection.query(
+                                        `UPDATE employees_DB.employee SET role_id = ${currentRole} WHERE first_name= '${name[0]}' AND last_name= '${name[1]}';`,
+                                        (err, res) => {
+                                            if (err) throw err;
+                                            console.log(`You have successfully upated the role.`);
+                                            runApp();
+                                        }
+                                    );
+                                }
+                            );
+                        });
+                }
+            );
+        }
+    );
+};
